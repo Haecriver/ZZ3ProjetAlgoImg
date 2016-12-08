@@ -21,7 +21,10 @@ const double lambda = 10.0;
 CImg<> HornSchunck(CImg<> seq)
 {
 	// On initialise le resultat
+	// 2 channels et 1 de depth
+	// initialise avec 0
 	CImg<> field(seq.width(),seq.height(),1,2,0);
+
 	// On calcul le gradient de l'image donnee
 	CImgList<> grad = seq.get_gradient("xyz",0);
 

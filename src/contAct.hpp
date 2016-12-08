@@ -73,7 +73,6 @@ void InitLevelSet(CImg<float>* imgIn, int x0,int y0, int r)
       Algorithme de propagation d'un contour implicite (modéle géodésique)
 
 *******************************************************************************/
-// ajouter gamma
 void Propagate(
 	CImg<float> imgIn,
 	CImg<float>* LevelSet,
@@ -94,8 +93,7 @@ void Propagate(
 	// OUAIS ALORS Y'A UN PROBLEME LA IL FAUT LE MODULE DES VECTEURS VITESSES
 	// ET PIS ON SAIT PAS COMMENT CEST RANGE FAUDRAIT REGARDER
 	const CImg<> imgInVitesse = 
-		(imgInHS.get_channel(0)*imgInHS.get_channel(0)
-	 	+ imgInHS.get_channel(1)*imgInHS.get_channel(1)).get_sqrt();
+		(imgInHS.get_channel(0).get_sqr() + imgInHS.get_channel(1).get_sqr()).get_sqrt();
 	
 	// Calcul de la fonction d'arrêt g du modèle géodésique
 	CImg<float> g(imgIn.width(), imgIn.height(), 1, 1);
