@@ -42,8 +42,4 @@ depend:
 	rm dependances
 
 #DEPENDANCIES
-main.o: main.cpp 
-
-
-
-
+main.o: main.cpp CImg.h contAct.hpp flotOpti.hpp

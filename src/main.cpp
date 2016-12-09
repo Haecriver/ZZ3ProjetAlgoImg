@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "CImg.h"
 #include "contAct.hpp"
 #include "flotOpti.hpp"

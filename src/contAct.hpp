@@ -7,6 +7,7 @@
 
 #include "CImg.h"
 #include "flotOpti.hpp"
+#include <iostream>
 
 #define MAX(a,b) (((a)<(b)) ? (b) : (a) )
 #define MIN(a,b) (((a)<(b)) ? (a) : (b) )
@@ -22,13 +23,13 @@ using namespace cimg_library;
                                 et domaine >0)
 
 *******************************************************************************/
-CImg<float> ExtractContour(CImg<float> LevelSet)
+CImg<> ExtractContour(CImg<> LevelSet)
 {
-	CImg<float> Contour(LevelSet.width(), LevelSet.height(), 1, 1);
+	CImg<> Contour(LevelSet.width(), LevelSet.height(), 1, 1);
 	Contour.fill(0);
 
-	CImg_3x3(I, float);
-	cimg_for3x3(LevelSet, x, y, 0, 0, I, float)
+	CImg_3x3(I, double);
+	cimg_for3x3(LevelSet, x, y, 0, 0, I, double)
 	{
 		// Comparaison avec les points voisin => si signe opposé alors on est sur un contour
 		if(Icc*Icp <= 0 || Icc*Icn <= 0 || Icc*Ipc <= 0 || Icc*Inc <= 0)
@@ -43,9 +44,9 @@ CImg<float> ExtractContour(CImg<float> LevelSet)
                      Affichage d'un contour dans une image
 
 *******************************************************************************/
-void DrawContour(CImg<float>* imgIn,CImg<float> Contour)
+void DrawContour(CImg<>* imgIn,CImg<> Contour)
 {
-	const float color = 2*imgIn->max();
+	const double color = 2*imgIn->max();
 
 	cimg_forXY(Contour,x,y)
 	{
@@ -60,7 +61,7 @@ void DrawContour(CImg<float>* imgIn,CImg<float> Contour)
     signée. Le contour initial est un cercle de centre (x0,y0) et de rayon r
 
 *******************************************************************************/
-void InitLevelSet(CImg<float>* imgIn, int x0,int y0, int r)
+void InitLevelSet(CImg<>* imgIn, int x0,int y0, int r)
 {
 	cimg_forXY(*imgIn,x,y)
 	{
@@ -74,9 +75,9 @@ void InitLevelSet(CImg<float>* imgIn, int x0,int y0, int r)
 
 *******************************************************************************/
 void Propagate(
-	CImg<float> imgIn,
-	CImg<float>* LevelSet,
-	int nbIter = 2000,						// Nombre d'itération
+	CImg<> imgIn,
+	CImg<>* LevelSet,
+	int nbIter = 20000,						// Nombre d'itération
 	float alpha = 0.05, 					// Pas temporel
 	float beta = 0.8, 						// Pondération du terme de propagation
 	float gamma = 0.5,
@@ -84,26 +85,35 @@ void Propagate(
 	float ballon = -0.01) 				// Force ballon
 {
 	// Calcul des gradients spaciaux régularisés de l'image
-	const CImgList<float> gradImg = imgIn.get_gradient("xy", 4 /* Filtre qui régularise */);
+	const CImgList<> gradImg = imgIn.get_gradient("xy", 4 /* Filtre qui régularise */);
 	const CImg<> squareGradImgNorme = (gradImg[0].get_sqr() + gradImg[1].get_sqr());
 	
 	// Calculer le module de chaque vecteur
 	const CImg<> imgInHS = HornSchunck(imgIn);
-		
-	// OUAIS ALORS Y'A UN PROBLEME LA IL FAUT LE MODULE DES VECTEURS VITESSES
-	// ET PIS ON SAIT PAS COMMENT CEST RANGE FAUDRAIT REGARDER
-	const CImg<> imgInVitesse = 
-		(imgInHS.get_channel(0).get_sqr() + imgInHS.get_channel(1).get_sqr()).get_sqrt();
+
+/******************************************************************************/
+// Affichage HornSchunck
+{
+	float color = 500; unsigned int sampling = 8; float factor = 40; int quiver_type = 0; float opacity = 0.5;
+
+	CImg<> imageHS = imgIn.get_slice(0).draw_quiver(imgInHS, &color, opacity, sampling, factor, quiver_type);
+    CImgDisplay resHS_disp(imageHS, "Horn et Schunck");
+
+	while (!resHS_disp.is_closed()) { resHS_disp.wait(); }
+}
+/******************************************************************************/
+
+	// Calcul du module des vecteurs vitesse
+	const CImg<> imgInVitesse = (imgInHS.get_channel(0).get_sqr() + imgInHS.get_channel(1).get_sqr()).get_sqrt();
 	
 	// Calcul de la fonction d'arrêt g du modèle géodésique
-	CImg<float> g(imgIn.width(), imgIn.height(), 1, 1);
+	CImg<> g(imgIn.width(), imgIn.height(), 1, 1);
 	cimg_forXY(g, x, y)
 	{
-		g(x, y) = ( -1 / double(1 + squareGradImgNorme(x, y)) ) + ballon + imgInVitesse(x, y) * gamma; // signe ?
+		g(x, y) = ( 1.0 / double(1.0 + squareGradImgNorme(x, y)) ) + ballon + (imgInVitesse(x, y) * gamma);
 	}
 	
 	const CImgList<> gradG = g.get_gradient("xy");
-
 	
 	// Note : p = plus / m = moins
 	for (int i = 0 ; i < nbIter ; ++i)
@@ -160,7 +170,7 @@ void Propagate(
 *******************************************************************************/
 
 void executeContourActif(	
-	CImg<float> img, 
+	CImg<> img, 
 	int nbIter = 2000,
 	float alpha = 0.05, 
 	float beta = 0.5, 
@@ -168,30 +178,19 @@ void executeContourActif(
 	float delta_t = 2.0, 
 	float ballon = -0.01)
 {
-
-
-	/*nbIter = cimg_option("-n", 2000, "Nombre d'itérations");
-	alpha = cimg_option("-a", 0.05, "Coefficient Alpha");
-	beta = cimg_option("-b", 0.8, "Coefficient Beta");
-	const char* imageName = cimg_option("-f", "../Img/char256.bmp", "Nom du fichier");*/
-
-	// Ouverture de l'image "char256.bmp"
-//	CImg<float> img = CImg<float>(imageName).channel(0);
-//	img.resize(img.width()/2, img.height()/2);
-
 	// Définition d'un contour initial circulaire
 	int x0 = img.width()/2;
 	int y0 = img.height()/2;
 	int r  = img.height()/4;
 
-	CImg<float> levelset(img.width(), img.height(), 1, 1);
+	CImg<> levelset(img.width(), img.height(), 1, 1);
 	InitLevelSet(&levelset, x0, y0, r);
 
 	// Propagation du contour
 	Propagate(img, &levelset, nbIter, alpha, beta, gamma, delta_t, ballon);
 
 	// Extraction du résultat
-	CImg<float> Contour = ExtractContour(levelset);
+	CImg<> Contour = ExtractContour(levelset);
 
 	// Tracé du résultat dans l'image
 	DrawContour(&img, Contour);
