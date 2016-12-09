@@ -9,6 +9,7 @@ EXEC=mosuofe
 
 #Liste des fichiers sources separes par des espaces
 SOURCES=main.cpp
+HEADERS=flotOpti.hpp contAct.hpp
 
 #Liste des fichiers objets
 OBJETS=$(SOURCES:%.cpp=%.o)
@@ -21,7 +22,7 @@ CFLAGS=-Wall -ansi -pedantic -ffast-math -I /usr/X11R6/include -I ./CImg -O2
 LFLAGS= -L . -L /usr/X11R6/lib  -lpthread -lX11 -lXext -Dcimg_use_xshm  -lm -lpng
 
 #R�le explicite de construction de l'ex�utable
-$(EXEC):$(OBJETS) Makefile
+$(EXEC):$(OBJETS) $(HEADERS) Makefile
 	$(CCPP) -o  $(EXEC) $(OBJETS) $(LFLAGS)
 .cpp.o:
 	$(CCPP) $(CFLAGS) -c $< -o $@
