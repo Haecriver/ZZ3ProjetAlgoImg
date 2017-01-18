@@ -82,7 +82,8 @@ void Propagate(
 	float beta, 						// Pondération du terme d'advection
 	float gamma,
 	float delta_t,					// Pas temporel
-	float ballon) 				// Force ballon
+	float ballon,
+	float theta) 				// Force ballon
 {
 	// Calcul des gradients spaciaux régularisés de l'image
 	const CImgList<> gradImg = imgIn.get_channel(0).get_gradient("xy", 4 /* Filtre qui régularise */);
@@ -117,22 +118,23 @@ void Propagate(
 	cimg_forXY(g, x, y)
 	{
 		//g(x, y) = ( 1.0 / double(1.0 + squareGradImgNorme(x, y)*0.05 + imgInVitesse(x,y)*10 ) ) + ballon;
-		g(x, y) = ( 1.0 / double(1.0 + squareGradImgNorme(x, y) ) ) + ballon - imgInVitesse(x,y)*gamma;
+		g(x, y) = ( 1.0 / double(1.0 + squareGradImgNorme(x, y)*(float)theta ) ) + ballon - imgInVitesse(x,y)*gamma;
 	}
 	
 	/////////////// AFFICHAGE DEBUG ///////////////
 	
-	CImgDisplay resg_disp(g, "gedodesique");
-	CImgDisplay resVitesse_disp(imgInVitesse, "Vitesse");
-	CImgDisplay resGradVitesse_disp(squareGradImgVitess, "Gradient Vitesse");
-	CImgDisplay ressquareGradImgNorme_disp(squareGradImgNorme, "Norme grad");
-	while (!resVitesse_disp.is_closed() && 
-	!resGradVitesse_disp.is_closed() && 
-	!ressquareGradImgNorme_disp.is_closed() &&
-	!resg_disp.is_closed()) 
-	{
-		resVitesse_disp.wait(); 
-	}
+	// CImgDisplay resg_disp(g, "gedodesique");
+	// CImgDisplay resVitesse_disp(imgInVitesse, "Vitesse");
+	// CImgDisplay resGradVitesse_disp(squareGradImgVitess, "Gradient Vitesse");
+	// CImgDisplay ressquareGradImgNorme_disp(squareGradImgNorme, "Norme grad");
+	
+	// while (!resVitesse_disp.is_closed() && 
+	// !resGradVitesse_disp.is_closed() && 
+	// !ressquareGradImgNorme_disp.is_closed() &&
+	// !resg_disp.is_closed()) 
+	// {
+	// 	resVitesse_disp.wait(); 
+	// }
 	
 	
 	const CImgList<> gradG = g.get_gradient("xy");
@@ -146,9 +148,7 @@ void Propagate(
 		const CImgList<> Dp = LevelSet->get_gradient("xy", 1);
 				
 		cimg_forXY(*LevelSet, x, y)
-		{
-			const float moduleVitesseCur = imgInVitesse(x, y) * gamma;
-		
+		{		
 			// Valeurs des dérivées de LevelSet
 			const float& Dxm = Dm[0](x, y);
 			const float& Dxp = Dp[0](x, y);
@@ -204,18 +204,19 @@ void executeContourActif(
 	float beta, 
 	float gamma,
 	float delta_t, 
-	float ballon)
+	float ballon,
+	float theta)
 {
 	// Définition d'un contour initial circulaire
 	int x0 = img.width()/2;
 	int y0 = img.height()/2;
-	int r  = img.height()/4;
+	int r  = (img.height() > img.width() ? img.width() / 2 - 10 : img.height() / 2 - 10);
 
 	CImg<> levelset(img.width(), img.height(), 1, 1);
 	InitLevelSet(&levelset, x0, y0, r);
 
 	// Propagation du contour
-	Propagate(img, &levelset, nbIter, alpha, beta, gamma, delta_t, ballon);
+	Propagate(img, &levelset, nbIter, alpha, beta, gamma, delta_t, ballon,theta);
 
 	// Extraction du résultat
 	CImg<> Contour = ExtractContour(levelset);
