@@ -111,14 +111,14 @@ void Propagate(
 	const CImgList<> gradimgInVitesse = imgInVitesse.get_gradient("xy",0);
 	const CImg<> squareGradImgVitess = (gradimgInVitesse[0].get_sqr() + gradimgInVitesse[1].get_sqr());
 	
-	
-	
+	// Valeur quand ca commence a pete
+	//gamma : 0.505139
+
 	// Calcul de la fonction d'arrêt g du modèle géodésique
 	CImg<> g(imgIn.width(), imgIn.height(), 1, 1);
 	cimg_forXY(g, x, y)
 	{
-		//g(x, y) = ( 1.0 / double(1.0 + squareGradImgNorme(x, y)*0.05 + imgInVitesse(x,y)*10 ) ) + ballon;
-		g(x, y) = ( 1.0 / double(1.0 + squareGradImgNorme(x, y)*(float)theta ) ) + ballon - imgInVitesse(x,y)*gamma;
+		g(x, y) = ( 1.0 / double(1.0 + squareGradImgNorme(x, y)*(float)theta ) ) + ballon - (float)imgInVitesse(x,y)*(float)gamma;
 	}
 	
 	/////////////// AFFICHAGE DEBUG ///////////////
