@@ -35,26 +35,66 @@
             objets sont en mouvement.
         </p>
 
-        <p>
-
-        </p>
-
         <h1 class="titrearticle">
             M&eacute;thode
         </h1>
 
-
-        <h2 class="soustitrearticle">
-            Partie th&eacute;orique
-        </h2>
+            <h2 class="soustitrearticle">
+                Partie th&eacute;orique
+            </h2>
 
         Pr&eacute;sentation de la m&eacute;thode utilis&eacute;e et r&eacute;f&eacute;rence aux travaux connexes (cf. biblio article)<br>
+
+            <p>
+                Dans ce projet, deux techniques vont se retrouver conjointement sur le traitement de nos images.
+            </p>
+
+            <h3 class="soussoustitrearticle">
+                Flot optique
+            </h3>
+
+            <p>
+                <!--Pour toi pierre-->
+            </p>
+
+            <h3 class="soussoustitrearticle">
+                Contours actifs
+            </h3>
+
+            <p>
+                Afin de pouvoir mettre en évidence les différents objets des images qui sont en mouvement, nous allons faire appel à la méthode des contours actifs géodésiques.
+            </p>
+
+            <p>
+                Pour se faire, nous allons disposer d'un contour initial quelconque placé dans l'image. Puis nous allons faire évoluer ce contour dans l'image. Ce contour prendra en compte l'évolution de l'image entre 2 intervalles de temps. Au fur et à mesure d'itérations sur l'évolution de ce contour, celui-ci s'approchera de plus en plus du résultat théorique attendu, et va donc détourer les objets en mouvement.
+            </p>
+
+            <p>
+                Afin que la donnée de mouvement soit bien prise en compte dans le modèle géodésique, nous allons introduire cette composante dans la fonction de calcul de l'évolution du contour.
+            </p>
+
 
         <h2 class="soustitrearticle">
             Impl&eacute;mentation
         </h2>
-
         D&eacute;tails de l'impl&eacute;mentation (sous CImg)
+
+            <h3 class="soussoustitrearticle">
+                Flot optique
+            </h3>
+
+            <p>
+                
+            </p>
+
+            <h3 class="soussoustitrearticle">
+                Contours actifs
+            </h3>
+
+            <p>
+
+            </p>
+
         <h1 class="titrearticle">
             R&eacute;sultats
         </h1>
@@ -62,6 +102,52 @@
         <h2 class="soustitrearticle">
             Validation sur donn&eacute;es de synth&egrave;se
         </h2>
+
+        <p>
+            Nous allons prendre pour point de départ les deux images suivantes :
+
+            <div>
+                <figure>
+                    <img src="../rsc/carreBois1.bmp" alt="Image de synthèse 1" height="128">
+                    <figcaption>
+                        Image 1
+                    </figcaption>
+                </figure>
+
+                <figure>
+                    <img src="../rsc/carreBois2.bmp" alt="Image de synthèse 2" height="128">
+                    <figcaption>
+                        Image 2
+                    </figcaption>
+                </figure>
+            </div>
+
+            Nous pouvous clairement observer sur ces images un déplacement du carré situé dans la partie basse de l'image, vers le bord gauche de celle-ci.
+        </p>
+
+        <p>
+            Pour exécuter le traitement, on utilise la commande :
+            <code>
+                ./mosuofe -img1 ../rsc/carreBois1.bmp -img2 ../rsc/carreBois2.bmp -a 0.5 -t 0.05 -g 0.3 -b 0.3
+            </code>
+
+            Le résultat est le suivant :
+
+            <div>
+                <figure>
+                    <img src="../rsc/resulatCarreBois.bmp" alt="Résultat" height="128">
+                    <figcaption>
+                        Résultat de l'exécution du programme
+                    </figcaption>
+                </figure>
+            </div>
+        </p>
+
+        <p>
+            Comme on peut l'observer, le programme est tout à fait capable de détecter l'objet en mouvement. On distingue toutefois certains soucis de précision sur le contour.
+            Ceci peut s'expliquer par le fait que le contour actif utilise également le gradient de l'image pour déterminer les contours. Il est donc possible que dans une zone trop sombre ou trop clair, le contour soit imprécis.
+        </p>
+
 
         Vous devez cr&eacute;er des donn&eacute;es de synth&egrave;se pour &eacute;valuer votre m&eacute;thode<br>
 
@@ -74,6 +160,10 @@
         <h1 class="titrearticle">
             Discussion
         </h1>
+
+        <p>
+            Bon, ça fonctionne, mais c'est pas encore ça dans une image réélle...
+        </p>
 
         Commentez vos r&eacute;sultats (d'un point de vue qualitatif <span style="font-weight: bold;">ET</span> quantitatif)<br>
 
