@@ -78,6 +78,7 @@ void Propagate(
 	CImg<> imgIn,
 	CImg<>* LevelSet,
 	int nbIter,						// Nombre d'itération
+	float lambda,
 	float alpha, 					// Pondération du terme de propagation
 	float beta, 						// Pondération du terme d'advection
 	float gamma,
@@ -90,7 +91,7 @@ void Propagate(
 	const CImg<> squareGradImgNorme = (gradImg[0].get_sqr() + gradImg[1].get_sqr());
 	
 	// Calculer le module de chaque vecteur
-	const CImg<> imgInHS = HornSchunck(imgIn);
+	const CImg<> imgInHS = HornSchunck(imgIn,lambda);
 
 /******************************************************************************/
 // Affichage HornSchunck
@@ -200,6 +201,7 @@ void Propagate(
 void executeContourActif(	
 	CImg<> img, 
 	int nbIter,
+	float lambda,
 	float alpha, 
 	float beta, 
 	float gamma,
@@ -216,7 +218,7 @@ void executeContourActif(
 	InitLevelSet(&levelset, x0, y0, r);
 
 	// Propagation du contour
-	Propagate(img, &levelset, nbIter, alpha, beta, gamma, delta_t, ballon,theta);
+	Propagate(img, &levelset, nbIter, lambda, alpha, beta, gamma, delta_t, ballon,theta);
 
 	// Extraction du résultat
 	CImg<> Contour = ExtractContour(levelset);

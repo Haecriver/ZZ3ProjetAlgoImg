@@ -15,10 +15,8 @@ using namespace cimg_library;
 static const CImg<double> moyenneur(3,3,1,1,1./9);
 // Nb d'ite de HornSchunck
 static const unsigned k = 50;
-// Valeur du parametre lambda
-static const double lambda = 10.0;
 
-CImg<> HornSchunck(CImg<> seq)
+CImg<> HornSchunck(CImg<> seq, double lambda)
 {
 	// On initialise le resultat
 	// 2 channels et 1 de depth

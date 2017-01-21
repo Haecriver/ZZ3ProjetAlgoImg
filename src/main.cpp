@@ -13,8 +13,9 @@ int main(int argc, char* argv[]){
 	VALEUR carreBois1.png carreBois2.png
 	./mosuofe -img1 ../rsc/carreBois1.bmp -img2 ../rsc/carreBois2.bmp -a 0.5 -t 0.05 -g 0.3 -b 0.3
 
-	VALEUR taxi1.png taxi2.png NE MARCHE PAS TROP TROP BIEN QUOI
-	./mosuofe -a 0.1 -t 0.2 -g 1.0 -b 0.5
+	VALEUR taxi1.png taxi2.png NE MARCHE PAS TROP TROP BIEN QUOI (mais y'a qq chose)
+	./mosuofe -a 0.1 -t 0.1 -g 3.0 -l 60.0
+
 
 */
 
@@ -22,6 +23,7 @@ int main(int argc, char* argv[]){
 	const char* image_path_2 = cimg_option("-img2", "../rsc/taxi2.bmp", "Image 1");
 
 	int nbIter = cimg_option("-n", 10000, "Nombre d'itérations");
+	float lambda = cimg_option("-l", 30.0, "Parametre lambda de Horn & Schunck");
 	float alpha = cimg_option("-a", 0.1, "Coefficient Alpha (propagation)");
 	float beta = cimg_option("-b", 0.5, "Coefficient Beta (advection)");
 	float gamma = cimg_option("-g", 0.5, "Coefficient Gamma (vitesse)");
@@ -36,7 +38,7 @@ int main(int argc, char* argv[]){
 	CImg<> seq = CImg<>(firstImage).channel(0);
 	seq.append(CImg<>(secondImage).channel(0),'z');
 
-	executeContourActif(seq, nbIter, alpha, beta, gamma, delta_t, ballon, theta);
+	executeContourActif(seq, nbIter, lambda, alpha, beta, gamma, delta_t, ballon, theta);
 
 	return EXIT_SUCCESS;
 }
