@@ -54,7 +54,27 @@
             </h3>
 
             <p>
-                <!--Pour toi pierre-->
+            	La méthode du flot optique permet de détecter les mouvements sur deux images consécutives. Son but est de calculer à partir d'un ensemble d'image 2D une approximation du mouvement 2D d'une projection de points à vélocité en 3D sur une image. Le flot optique va ainsi donner une estimation d'un mouvement apparent<em>REF site ent</em>
+            </p>
+            
+            <p>
+            	Il existe plusieurs algorithme pour réaliser ce filtre : l'algorithme de Lucas et Kanade, Horn et Schunck, Weickert et Schnörr. Ce dernier est celui proposé par le sujet du projet <em>ref</em>. Il ajoute une fonction de lissage au flot optique pour améliorer ses résultats. Cette méthode toutefois ne répère pas de maniere efficace les mouvements les plus petits mais permet une réduction du bruit, c'est pour cela qu'elle est mise en avant dans le docuement. La méthode de Horn et Schunck de son côté peut donner des résultats plus bruités mais l'ajustement de ses paramètres fournit des résultats acceptables. <em>ref</em>
+			</p>
+			
+			<p>
+				Avec notre implémentation du flot optique, nous obtenons une "carte des mouvements" entre les deux images. Sur cette matrice, les points en mouvement ont une valeur élevé et ceux qui ne semblent pas avoir bougés ont une valeur proche de zéro.
+			</p>
+			
+			<figure>
+                    <img src="./rsc/resultat_flot_optique.png" alt="Résultat Horn & Schunck" height="128">
+                    <figcaption>
+                        Résultat Horn & Schunck
+                    </figcaption>
+                </figure>
+            </div>
+            
+			<p>
+            	Dans notre implémentation nous utilisons l'algorithme de Horn et Schunck.
             </p>
 
             <h3 class="soussoustitrearticle">
@@ -84,7 +104,16 @@
             </h3>
 
             <p>
+                Notre implémentation du flot optique mais en oeuvre la formule suivante :</br>
                 
+ v(m,t)=(u(m,t),v(m,t))<br>
+∫D(∇I⋅v+It)2+λ2(∥∇u∥2+∥∇v∥2)dm<br>
+
+uk+1=u¯k−Ix[Ixu¯k+Iyv¯k+It]λ2+I2x+I2y<br>
+
+vk+1=v¯k−Iy[Ixu¯k+Iyv¯k+It]λ2+I2x+I2y<br>
+
+VOIR <em>math ML</em>
             </p>
 
             <h3 class="soussoustitrearticle">
