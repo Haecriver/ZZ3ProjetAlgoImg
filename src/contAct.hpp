@@ -107,6 +107,7 @@ void Propagate(
 
 	// Calcul du module des vecteurs vitesse
 	const CImg<> imgInVitesse = ((imgInHS.get_channel(0).get_sqr() + imgInHS.get_channel(1).get_sqr()).get_sqrt());
+	
 
 	// Normalement pas util
 	const CImgList<> gradimgInVitesse = imgInVitesse.get_gradient("xy",0);
@@ -129,14 +130,15 @@ void Propagate(
 	// CImgDisplay resGradVitesse_disp(squareGradImgVitess, "Gradient Vitesse");
 	// CImgDisplay ressquareGradImgNorme_disp(squareGradImgNorme, "Norme grad");
 	
-	// while (!resVitesse_disp.is_closed() && 
+	// while (
+	// !resVitesse_disp.is_closed()
 	// !resGradVitesse_disp.is_closed() && 
 	// !ressquareGradImgNorme_disp.is_closed() &&
-	// !resg_disp.is_closed()) 
+	// !resg_disp.is_closed()
+	//) 
 	// {
 	// 	resVitesse_disp.wait(); 
 	// }
-	
 	
 	const CImgList<> gradG = g.get_gradient("xy");
 
