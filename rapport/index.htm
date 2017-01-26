@@ -25,17 +25,17 @@
             Segmentation d'objets en mouvement en utilisant l'estimation par flot optique.
         </h1>
         <h3>
-            Benjamin Barbesange - Pierre Chevalier, ISIMA 3ème Année - Fillière 2
+            Benjamin Barbesange - Pierre Chevalier, ISIMA 3&egrave;me Ann&eacute;e - Filli&egrave;re 2
         </h3>
         <h1 class="titrearticle">
             Pr&eacute;sentation du sujet
         </h1>
         <p>
-            Le projet se base sur une publication du laboratoire de recherche <em>CEREMADE</em> de l'<em>Université de Paris 9</em> effectu&eacute;e le 18 Juin 2004.
+            Le projet se base sur une publication du laboratoire de recherche <em>CEREMADE</em> de l'<em>Universit&eacute; de Paris 9</em> effectu&eacute;e le 18 Juin 2004.
         </p>
 
         <p>
-            L'interêt du projet est de pouvoir détecter de manière fiable les objets en mouvements au sein d'une séquence vidéo. Pour des raisons de simplifications, nous traiterons ici des lots de 2 images extraites d'une séquence vidéo où des objets sont en mouvement.
+            L'inter&ecirc;t du projet est de pouvoir d&eacute;tecter de mani&egrave;re fiable les objets en mouvements au sein d'une s&eacute;quence vid&eacute;o. Pour des raisons de simplifications, nous traiterons ici des lots de 2 images extraites d'une s&eacute;quence vid&eacute;o où des objets sont en mouvement.
         </p>
 
         <h1 class="titrearticle">
@@ -55,11 +55,11 @@
             </h3>
 
             <p>
-            	La méthode du flot optique permet de détecter les mouvements sur deux images consécutives. Son but est de calculer à partir d'un ensemble d'image 2D une approximation du mouvement 2D d'une projection de points à vélocité en 3D sur une image. Le flot optique va ainsi donner une estimation d'un mouvement apparent en plusieurs images de niveau de gris.
+            	La m&eacute;thode du flot optique permet de d&eacute;tecter les mouvements sur deux images cons&eacute;cutives. Son but est de calculer &agrave; partir d'un ensemble d'image 2D une approximation du mouvement 2D d'une projection de points &agrave; v&eacute;locit&eacute; en 3D sur une image. Le flot optique va ainsi donner une estimation d'un mouvement apparent en plusieurs images de niveau de gris.
             </p>
             
             <p>
-				Pour intégré le flot optique à notre algorithme, c'est à dire pour que cette détection de mouvement soit intégrée à notre contour actif, il faut transformer le résultat en une matrice représentant le mouvement. Nous normons donc la distribution en niveau de gris pour obtenir une image de vitesse.
+				Pour int&eacute;grer le flot optique &agrave; notre algorithme, c'est &agrave; dire pour que cette d&eacute;tection de mouvement soit int&eacute;gr&eacute;e &agrave; notre contour actif, il faut transformer le r&eacute;sultat en une matrice repr&eacute;sentant le mouvement. Nous normons donc la distribution en niveau de gris pour obtenir une image de vitesse.
 			</p>
 
             <pre class="brush: cpp">
@@ -67,26 +67,26 @@
             </pre>
 
             <p>
-            	Il existe plusieurs algorithme pour réaliser ce filtre : l'algorithme de Lucas et Kanade, Horn et Schunck, Weickert et Schnörr. Ce dernier est celui proposé par le sujet du projet. Il ajoute une fonction de lissage au flot optique pour améliorer ses résultats. Cette méthode toutefois ne répère pas de maniere efficace les mouvements les plus petits mais permet une réduction du bruit, c'est pour cela qu'elle est mise en avant dans le document. La méthode de Horn et Schunck de son côté peut donner des résultats plus bruités mais l'ajustement de ses paramètres fournit des résultats acceptables.
+            	Il existe plusieurs algorithme pour r&eacute;aliser ce filtre : l'algorithme de Lucas et Kanade, Horn et Schunck, Weickert et Schnörr. Ce dernier est celui propos&eacute; par le sujet du projet. Il ajoute une fonction de lissage au flot optique pour am&eacute;liorer ses r&eacute;sultats. Cette m&eacute;thode toutefois ne r&eacute;p&egrave;re pas de maniere efficace les mouvements les plus petits mais permet une r&eacute;duction du bruit, c'est pour cela qu'elle est mise en avant dans le document. La m&eacute;thode de Horn et Schunck de son côt&eacute; peut donner des r&eacute;sultats plus bruit&eacute;s mais l'ajustement de ses param&egrave;tres fournit des r&eacute;sultats acceptables.
 			</p>
 		<div>	
 			<figure>
-                <img src="./rsc/small_lambda.png" alt="Résultat Horn & Schunck" height="128">
+                <img src="./rsc/small_lambda.png" alt="R&eacute;sultat Horn &amp;Schunck" height="128">
                 <figcaption>
-                    Résultat Horn & Schunck avec un lambda peu élevé
+                    R&eacute;sultat Horn &amp;Schunck avec un lambda peu &eacute;lev&eacute;
                 </figcaption>
             </figure>
 					
 			<figure>
-                <img src="./rsc/big_lambda.png" alt="Résultat Horn & Schunck" height="128">
+                <img src="./rsc/big_lambda.png" alt="R&eacute;sultat Horn &amp;Schunck" height="128">
                 <figcaption>
-                    Résultat Horn & Schunck avec un lambda élevé
+                    R&eacute;sultat Horn &amp;Schunck avec un lambda &eacute;lev&eacute;
                 </figcaption>
             </figure>
         </div>
             
 			<p>
-            	Du fait de ces résultats satisfaisant avec un lambda élevé, nous utilisons l'algorithme de Horn et Schunck dans notre implémentation. 
+            	Du fait de ces r&eacute;sultats satisfaisant avec un lambda &eacute;lev&eacute;, nous utilisons l'algorithme de Horn et Schunck dans notre impl&eacute;mentation. 
             </p>
 
             <h3 class="soussoustitrearticle">
@@ -94,29 +94,32 @@
             </h3>
 
             <p>
-                Afin de pouvoir mettre en évidence les différents objets des images qui sont en mouvement, nous allons faire appel à la méthode des contours actifs géodésiques.
+                Afin de pouvoir mettre en &eacute;vidence les diff&eacute;rents objets des images qui sont en mouvement, nous allons faire appel &agrave; la m&eacute;thode des contours actifs g&eacute;od&eacute;siques.
             </p>
 
             <p>
-                Pour se faire, nous allons disposer d'un contour initial quelconque placé dans l'image. Puis nous allons faire évoluer ce contour dans l'image. Ce contour prendra en compte l'évolution de l'image entre 2 intervalles de temps. Au fur et à mesure d'itérations sur l'évolution de ce contour, celui-ci s'approchera de plus en plus du résultat théorique attendu, et va donc détourer les objets en mouvement.
+                Pour ce faire, nous allons disposer d'un contour initial quelconque plac&eacute; dans l'image. Puis nous allons faire &eacute;voluer ce contour dans l'image. Ce contour prendra en compte l'&eacute;volution de l'image entre 2 intervalles de temps. Au fur et &agrave; mesure d'it&eacute;rations sur l'&eacute;volution de ce contour, celui-ci s'approchera de plus en plus du r&eacute;sultat th&eacute;orique attendu, et va donc d&eacute;tourer les objets en mouvement.
             </p>
 
             <p>
-                Afin que la donnée de mouvement soit bien prise en compte dans le modèle géodésique, nous allons introduire cette composante dans la fonction de calcul de l'évolution du contour.
+                Une fonction de courbe g&eacute;od&eacute;sique est calcul&eacute;e et va permettre de faire &eacute;voluer notre contour. Cette fonction est la suivante :
+                <ul>
+                    <li/> g(x) = 1 / (1 + |<mi mathvariant="normal">&#x2207;<!-- ∇ --></mi>Img|)
+                </ul>
             </p>
 
             <p>
-                La fonction d'évolution du contour est la suivante :
+                La fonction d'&eacute;volution du contour est la suivante :
                 <ul>
                     <li/> F = a*F_prop + b*F_curv + c*F_adv.
                 </ul>
 
                 Avec :
                 <ul>
-                    <li/>F_prop : force de propagation, définit la vitesse d'évolution du contour,
-                    <li/> F_curv : rayon de courbure, définit les contraintes d'évolution sur la forme du contour et dépend du rayon de courbure,
+                    <li/>F_prop : force de propagation, d&eacute;finit la vitesse d'&eacute;volution du contour,
+                    <li/> F_curv : rayon de courbure, d&eacute;finit les contraintes d'&eacute;volution sur la forme du contour et d&eacute;pend du rayon de courbure,
                     <li/>F_adv : force d'advection,
-                    <li/> a, b et c des coefficients permettant de plus ou moins considérer un des termes dans la formule.
+                    <li/> a, b et c des coefficients permettant de plus ou moins consid&eacute;rer un des termes dans la formule.
                 </ul>
             </p>
 
@@ -125,25 +128,25 @@
             </h3>
             
             <p>
-                Nous allons donc nous servir du flot optique afin de déterminer les mouvements dans l'image. Ces données de mouvement se retrouvent 
+                Nous allons donc nous servir du flot optique afin de d&eacute;terminer les mouvements dans l'image. Ces donn&eacute;es de mouvement se retrouvent dans la fonction de courbe g&eacute;od&eacute;sique que notre contour devra suivre pour d&eacute;limiter au mieux les objets :
+                <ul>
+                    <li/> g(x) = 1 / (1 + |<mi mathvariant="normal">&#x2207;<!-- ∇ --></mi>Img| - <mo>&#x2225;</mo> VecteursVitesse(Img) <mo>&#x2225;</mo>)
+                </ul>
             </p>
-<!-- TODO: Parler de la prise en compte du flot optique dans le modele geodisique du contour actif -->
 
 
         <h2 class="soustitrearticle">
             Impl&eacute;mentation
         </h2>
         
-            Les techniques abbordées précédemment ont été mise en place en C++ à l'aide de la bibliothèque CImg.
+            Les techniques abbord&eacute;es pr&eacute;c&eacute;demment ont &eacute;t&eacute; mise en place en C++ &agrave; l'aide de la biblioth&egrave;que CImg.
 
             <h3 class="soussoustitrearticle">
                 Flot optique
             </h3>
 
-<!-- TODO: Completer un peu cette partie -->
-
         <p>
-                Notre implémentation du flot optique met en oeuvre la formule suivante :
+                Notre impl&eacute;mentation du flot optique met en oeuvre la formule suivante :
         </p>
                 
 		<math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -424,28 +427,28 @@ CImg<> HornSchunck(CImg<> seq, double lambda)
 </pre>
 
             <h3 class="soussoustitrearticle">
-                Contours actifs couplée au flot optique
+                Contours actifs coupl&eacute;e au flot optique
             </h3>
 
             <p>
-                Le code suivant permet d'effectuer une recherche de contour géodésique dans l'image en prennant en compte les mouvements décrits à l'aide du flot optique présenté dans la partie précédente.
+                Le code suivant permet d'effectuer une recherche de contour g&eacute;od&eacute;sique dans l'image en prennant en compte les mouvements d&eacute;crits &agrave; l'aide du flot optique pr&eacute;sent&eacute; dans la partie pr&eacute;c&eacute;dente.
             </p>
 
 <pre class="brush: cpp">
 void Propagate(
 	CImg<> imgIn,
 	CImg<>* LevelSet,
-	int nbIter,						// Nombre d'itération
+	int nbIter,						// Nombre d'it&eacute;ration
 	float lambda,
-	float alpha, 					// Pondération du terme de propagation
-	float beta, 						// Pondération du terme d'advection
+	float alpha, 					// Pond&eacute;ration du terme de propagation
+	float beta, 						// Pond&eacute;ration du terme d'advection
 	float gamma,
 	float delta_t,					// Pas temporel
 	float ballon,
 	float theta) 				// Force ballon
 {
-	// Calcul des gradients spaciaux régularisés de l'image
-	const CImgList<> gradImg = imgIn.get_channel(0).get_gradient("xy", 4 /* Filtre qui régularise */);
+	// Calcul des gradients spaciaux r&eacute;gularis&eacute;s de l'image
+	const CImgList<> gradImg = imgIn.get_channel(0).get_gradient("xy", 4 /* Filtre qui r&eacute;gularise */);
 	const CImg<> squareGradImgNorme = (gradImg[0].get_sqr() + gradImg[1].get_sqr());
 	
 	// Calculer le module de chaque vecteur
@@ -457,7 +460,7 @@ void Propagate(
 	const CImgList<> gradimgInVitesse = imgInVitesse.get_gradient("xy",0);
 	const CImg<> squareGradImgVitess = (gradimgInVitesse[0].get_sqr() + gradimgInVitesse[1].get_sqr());
 	
-	// Calcul de la fonction d'arrêt g du modèle géodésique
+	// Calcul de la fonction d'arr&ecirc;t g du mod&egrave;le g&eacute;od&eacute;sique
 	CImg<> g(imgIn.width(), imgIn.height(), 1, 1);
 	cimg_forXY(g, x, y)
 	{
@@ -468,14 +471,14 @@ void Propagate(
 
 	for (int i = 0 ; i < nbIter ; ++i)
 	{
-		// Calcul des dérivées de LevelSet
+		// Calcul des d&eacute;riv&eacute;es de LevelSet
 		const CImgList<> Dm = LevelSet->get_gradient("xy", -1);
 		//const CImgList<> Dc = LevelSet->get_gradient("xy", 0);
 		const CImgList<> Dp = LevelSet->get_gradient("xy", 1);
 				
 		cimg_forXY(*LevelSet, x, y)
 		{		
-			// Valeurs des dérivées de LevelSet
+			// Valeurs des d&eacute;riv&eacute;es de LevelSet
 			const float& Dxm = Dm[0](x, y);
 			const float& Dxp = Dp[0](x, y);
 			const float& Dym = Dm[1](x, y);
@@ -519,7 +522,21 @@ void Propagate(
 </pre>
 
     <p>
-        Le contour initial utilisé est un cercle centré dans l'image et dont le rayon est déterminé par le minimum entre la moitié de la hauteur de l'image et la moitié de la largeur de l'image.
+        Le contour initial utilis&eacute; est un cercle centr&eacute; dans l'image et dont le rayon est d&eacute;termin&eacute; par le minimum entre la moiti&eacute; de la hauteur de l'image et la moiti&eacute; de la largeur de l'image.
+    </p>
+
+    <p>
+        Diff&eacute;rents coefficients sont propos&eacute;s sur la ligne de commande du programme et permettent d'am&eacute;liorer le contour :
+        <ul>
+            <li/> -n : nombre d'it&eacute;rations &agrave; effectuer sur le contour,
+            <li/> -l : param&egrave;tre lamba permettant de r&eacute;duire le bruit sur la m&eacute;thode de Horn &amp;Schunck,
+            <li/> -a : agit sur l'importance de la force de propagation,
+            <li/> -b : agit sur l'importance de la force d'advection,
+            <li/> -g : agit sur l'importance de la vitesse de propagation,
+            <li/> -t : agit sur l'importance de la norme du gradient de l'image,
+            <li/> -dt : pas temporel,
+            <li/> -ballon : force de ballon.
+        </ul>
     </p>
 
         <h1 class="titrearticle">
@@ -531,50 +548,50 @@ void Propagate(
         </h2>
 
         <p>
-            Nous allons prendre pour point de départ les deux images suivantes :
+            Nous allons prendre pour point de d&eacute;part les deux images suivantes :
 
             <div>
                 <figure>
-                    <img src="../rsc/carreBois1.bmp" alt="Image de synthèse 1" height="128">
+                    <img src="../rsc/carreBois1.bmp" alt="Image de synth&egrave;se 1" height="128">
                     <figcaption>
                         Image 1
                     </figcaption>
                 </figure>
 
                 <figure>
-                    <img src="../rsc/carreBois2.bmp" alt="Image de synthèse 2" height="128">
+                    <img src="../rsc/carreBois2.bmp" alt="Image de synth&egrave;se 2" height="128">
                     <figcaption>
                         Image 2
                     </figcaption>
                 </figure>
             </div>
 
-            Nous pouvous clairement observer sur ces images un déplacement du carré situé dans la partie basse de l'image, vers le bord gauche de celle-ci.
+            Nous pouvous clairement observer sur ces images un d&eacute;placement du carr&eacute; situ&eacute; dans la partie basse de l'image, vers le bord gauche de celle-ci.
         </p>
 
         <p>
-            Pour exécuter le traitement, on utilise la commande :    
+            Pour ex&eacute;cuter le traitement, on utilise la commande :    
         </p>
             <code>
                 ./mosuofe -img1 ../rsc/carreBois1.bmp -img2 ../rsc/carreBois2.bmp -a 0.5 -t 0.05 -g 0.3 -b 0.3
             </code>
 
 			<p>
-            	Le résultat est le suivant :
+            	Le r&eacute;sultat est le suivant :
 			</p>
             <div>
                 <figure>
-                    <img src="../rsc/resulatCarreBois.bmp" alt="Résultat" height="128">
+                    <img src="../rsc/resulatCarreBois.bmp" alt="R&eacute;sultat" height="128">
                     <figcaption>
-                        Résultat de l'exécution du programme
+                        R&eacute;sultat de l'ex&eacute;cution du programme
                     </figcaption>
                 </figure>
             </div>
         </p>
 
         <p>
-            Comme on peut l'observer, le programme est tout à fait capable de détecter l'objet en mouvement. On distingue toutefois certains soucis de précision sur le contour.
-            Ceci peut s'expliquer par le fait que le contour actif utilise également le gradient de l'image pour déterminer les contours. Il est donc possible que dans une zone trop sombre ou trop clair, le contour soit imprécis.
+            Comme on peut l'observer, le programme est tout &agrave; fait capable de d&eacute;tecter l'objet en mouvement. On distingue toutefois certains soucis de pr&eacute;cision sur le contour.
+            Ceci peut s'expliquer par le fait que le contour actif utilise &eacute;galement le gradient de l'image pour d&eacute;terminer les contours. Il est donc possible que dans une zone trop sombre ou trop claire, le contour soit impr&eacute;cis.
         </p>
 
 
@@ -584,26 +601,93 @@ void Propagate(
             Donn&eacute;es r&eacute;elles
         </h2>
 
-        Une fois la m&eacute;thode &eacute;valu&eacute;e, vous appliquerez votre m&eacute;thode sur des images r&eacute;elles<br>
+        <p>
+            Nous allons &agrave; pr&eacute;sent tester le programme sur des donn&eacute;es r&eacute;elles. Pour ce faire, nous allons utiliser les deux images suivantes, extraites d'une s&eacute;quence vid&eacute;o (les param&egrave;tres utilis&eacute;s sont les param&egrave;tres par d&eacute;faut du programme):
+
+            <div>
+                <figure>
+                    <img src="../rsc/taxi1.bmp" alt="R&eacute;sultat" height="128">
+                    <figcaption>
+                        Image 1
+                    </figcaption>
+                </figure>
+                <figure>
+                    <img src="../rsc/taxi2.bmp" alt="R&eacute;sultat" height="128">
+                    <figcaption>
+                        Image 2
+                    </figcaption>
+                </figure>
+            </div>
+        </p>
+
+        <p>
+            Le r&eacute;sultat obtenu est le suivant :
+
+            <div>
+                <figure>
+                    <img src="../rsc/resulatTaxi.bmp" alt="R&eacute;sultat" height="128">
+                    <figcaption>
+                        R&eacute;sultat
+                    </figcaption>
+                </figure>
+            </div>
+        </p>
 
         <h1 class="titrearticle">
         	Discussion
         </h1>
 
         <p>
-        <!-- TODO: Parler de la difference de resultats entre les images créées et réelles -->
-            Bon, ça fonctionne, mais c'est pas encore ça dans une image réélle...
+            Nous pouvons remarquer que cette m&eacute;thode de d&eacute;tection des contours d'objets en mouvement est plutôt fiable comme nous avons pu le constater sur les r&eacute;sultats th&eacute;oriques.
+            Cependant dans un contexte plus r&eacute;el, nous remarquons qu'il est plus diffile d'obtenir des contours pr&eacute;cis. Plusieurs facteurs en sont responsables :
+            <ul>
+                <li/> Un mauvais contraste dans l'image,
+                <li/> Des contours pas tr&eacute;s marqu&eacute;s sur un objet (par exemple avec une ombre port&eacute;e trop importante),
+                <li/> Mauvaise d&eacute;termination du mouvement d'un objet.
+            </ul>
         </p>
-
-        Commentez vos r&eacute;sultats (d'un point de vue qualitatif <span style="font-weight: bold;">ET</span> quantitatif)<br>
 
 
         <h1 class="titrearticle">
             R&eacute;f&eacute;rences
         </h1>
-        <!-- TODO: Reciter les references du site du prof sur l'ent et de l'article du projet -->
 
-        Rappel des r&eacute;f&eacute;rences incontournables du sujet trait&eacute; dans l'article
+        <p>
+            <strong> <!-- authors -->
+                F. Ranchin, F. Dibos
+            </strong>,
+            <em> <!-- title -->
+                Moving Objects Segmentation Using Optical Flow Estimation
+            </em>,
+            <!-- Date -->
+            (2004)
+        </p>
+
+        <p>
+            <strong> <!-- authors -->
+                B.K.P. Horn and B. Schunck
+            </strong>,
+            <em> <!-- title -->
+                Determining Optical Flow
+            </em>,
+            <!-- Date -->
+            Artificial intelligence
+            (1981)
+        </p>
+
+        <p>
+            <strong> <!-- authors -->
+                R. Deriche and N. Paragios
+            </strong>,
+            <em> <!-- title -->
+                Geodesic Active Regions for Motion Estimation and Tracking
+            </em>,
+            <!-- Date -->
+            INRIA Research Report n° 3631
+            (1999)
+        </p>
+        
+        
     </body>
 <script type="text/javascript">
      SyntaxHighlighter.all()
