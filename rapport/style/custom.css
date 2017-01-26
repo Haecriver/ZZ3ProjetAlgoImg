@@ -1,0 +1,12 @@
+.image_group figure{
+	display: inline-block;
+}
+
+.image_group figure img{
+	display: flex;
+	margin:auto;
+}
+
+.image_group figure figcaption{
+	text-align: center;
+}

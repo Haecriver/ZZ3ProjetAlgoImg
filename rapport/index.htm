@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="./style/style.css" type="text/css">
         <link rel="stylesheet" href="./style/shCore.css" type="text/css">
         <link rel="stylesheet" href="./style/shCoreDefault.css" type="text/css">
-
+		<link rel="stylesheet" href="./style/custom.css" type="text/css">
 
 		<script type="text/javascript" src="script/shCore.js"></script>
 		<script type="text/javascript" src="script/shBrushCpp.js"></script>
@@ -69,7 +69,7 @@
             <p>
             	Il existe plusieurs algorithme pour r&eacute;aliser ce filtre : l'algorithme de Lucas et Kanade, Horn et Schunck, Weickert et Schnörr. Ce dernier est celui propos&eacute; par le sujet du projet. Il ajoute une fonction de lissage au flot optique pour am&eacute;liorer ses r&eacute;sultats. Cette m&eacute;thode toutefois ne r&eacute;p&egrave;re pas de maniere efficace les mouvements les plus petits mais permet une r&eacute;duction du bruit, c'est pour cela qu'elle est mise en avant dans le document. La m&eacute;thode de Horn et Schunck de son côt&eacute; peut donner des r&eacute;sultats plus bruit&eacute;s mais l'ajustement de ses param&egrave;tres fournit des r&eacute;sultats acceptables.
 			</p>
-		<div>	
+		<div class=image_group>	
 			<figure>
                 <img src="./rsc/small_lambda.png" alt="R&eacute;sultat Horn &amp;Schunck" height="128">
                 <figcaption>
@@ -129,12 +129,10 @@
             
             <p>
                 Nous allons donc nous servir du flot optique afin de d&eacute;terminer les mouvements dans l'image. Ces donn&eacute;es de mouvement se retrouvent dans la fonction de courbe g&eacute;od&eacute;sique que notre contour devra suivre pour d&eacute;limiter au mieux les objets :
-                <ul>
-                    <li/> g(x) = 1 / (1 + |<mi mathvariant="normal">&#x2207;<!-- ∇ --></mi>Img| - <mo>&#x2225;</mo> VecteursVitesse(Img) <mo>&#x2225;</mo>)
-                </ul>
             </p>
-
-
+            
+                <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>g</mi><mfenced><mi>x</mi></mfenced><mo>&#xA0;</mo><mo>=</mo><mfrac><mn>1</mn><mrow><mo>&#xA0;</mo><mo>(</mo><mn>1</mn><mo>&#xA0;</mo><mo>+</mo><mo>&#xA0;</mo><mo>|</mo><mo>&#x2207;</mo><mi>I</mi><mi>m</mi><mi>g</mi><mo>|</mo><mo>&#xA0;</mo><mo>-</mo><mo>&#xA0;</mo><mo>&#x2225;</mo><mo>&#xA0;</mo><mi>V</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>e</mi><mi>u</mi><mi>r</mi><mi>s</mi><mi>V</mi><mi>i</mi><mi>t</mi><mi>e</mi><mi>s</mi><mi>s</mi><mi>e</mi><mo>(</mo><mi>I</mi><mi>m</mi><mi>g</mi><mo>)</mo><mo>&#xA0;</mo><mo>&#x2225;</mo></mrow></mfrac></math>
+            
         <h2 class="soustitrearticle">
             Impl&eacute;mentation
         </h2>
@@ -402,7 +400,7 @@ CImg<> HornSchunck(CImg<> seq, double lambda)
 	CImgList<> grad = seq.get_gradient("xyz",0);
 
 	// Pour un nombre k d'iteration
-	for(unsigned i =0; i<k ; i++){
+	for(unsigned i =0; i < k ; i++){
 		// On calcul la moyenne des valeurs
 		CImg<> moy = field.get_convolve(moyenneur);
 		
@@ -550,7 +548,7 @@ void Propagate(
         <p>
             Nous allons prendre pour point de d&eacute;part les deux images suivantes :
 
-            <div>
+            <div class=image_group>
                 <figure>
                     <img src="../rsc/carreBois1.bmp" alt="Image de synth&egrave;se 1" height="128">
                     <figcaption>
@@ -604,7 +602,7 @@ void Propagate(
         <p>
             Nous allons &agrave; pr&eacute;sent tester le programme sur des donn&eacute;es r&eacute;elles. Pour ce faire, nous allons utiliser les deux images suivantes, extraites d'une s&eacute;quence vid&eacute;o (les param&egrave;tres utilis&eacute;s sont les param&egrave;tres par d&eacute;faut du programme):
 
-            <div>
+            <div class=image_group>
                 <figure>
                     <img src="../rsc/taxi1.bmp" alt="R&eacute;sultat" height="128">
                     <figcaption>
@@ -625,7 +623,7 @@ void Propagate(
 
             <div>
                 <figure>
-                    <img src="../rsc/resulatTaxi.bmp" alt="R&eacute;sultat" height="128">
+                    <img src="./rsc/a0.3t0.2g2.0b0.4l100.0.png" alt="R&eacute;sultat" height="128">
                     <figcaption>
                         R&eacute;sultat
                     </figcaption>

@@ -112,7 +112,6 @@ void Propagate(
 	{
 		// Calcul des dérivées de LevelSet
 		const CImgList<> Dm = LevelSet->get_gradient("xy", -1);
-		//const CImgList<> Dc = LevelSet->get_gradient("xy", 0);
 		const CImgList<> Dp = LevelSet->get_gradient("xy", 1);
 				
 		cimg_forXY(*LevelSet, x, y)
