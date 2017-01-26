@@ -93,29 +93,12 @@ void Propagate(
 	// Calculer le module de chaque vecteur
 	const CImg<> imgInHS = HornSchunck(imgIn,lambda);
 
-/******************************************************************************/
-// Affichage HornSchunck
-{
-	//float color = 500; unsigned int sampling = 8; float factor = 40; int quiver_type = 0; float opacity = 0.5;
-
-	//CImg<> imageHS = imgIn.get_slice(0).draw_quiver(imgInHS, &color, opacity, sampling, factor, quiver_type);
-    //CImgDisplay resHS_disp(imageHS, "Horn et Schunck");
-
-	//while (!resHS_disp.is_closed()) { resHS_disp.wait(); }
-}
-/******************************************************************************/
-
 	// Calcul du module des vecteurs vitesse
 	const CImg<> imgInVitesse = ((imgInHS.get_channel(0).get_sqr() + imgInHS.get_channel(1).get_sqr()).get_sqrt());
 	
-
-	// Normalement pas util
 	const CImgList<> gradimgInVitesse = imgInVitesse.get_gradient("xy",0);
 	const CImg<> squareGradImgVitess = (gradimgInVitesse[0].get_sqr() + gradimgInVitesse[1].get_sqr());
 	
-	// Valeur quand ca commence a pete
-	//gamma : 0.505139
-
 	// Calcul de la fonction d'arrêt g du modèle géodésique
 	CImg<> g(imgIn.width(), imgIn.height(), 1, 1);
 	cimg_forXY(g, x, y)
@@ -123,26 +106,8 @@ void Propagate(
 		g(x, y) = ( 1.0 / double(1.0 + squareGradImgNorme(x, y)*(float)theta ) ) + ballon - (float)imgInVitesse(x,y)*(float)gamma;
 	}
 	
-	/////////////// AFFICHAGE DEBUG ///////////////
-	
-	// CImgDisplay resg_disp(g, "gedodesique");
-	// CImgDisplay resVitesse_disp(imgInVitesse, "Vitesse");
-	// CImgDisplay resGradVitesse_disp(squareGradImgVitess, "Gradient Vitesse");
-	// CImgDisplay ressquareGradImgNorme_disp(squareGradImgNorme, "Norme grad");
-	
-	// while (
-	// !resVitesse_disp.is_closed()
-	// !resGradVitesse_disp.is_closed() && 
-	// !ressquareGradImgNorme_disp.is_closed() &&
-	// !resg_disp.is_closed()
-	//) 
-	// {
-	// 	resVitesse_disp.wait(); 
-	// }
-	
 	const CImgList<> gradG = g.get_gradient("xy");
 
-	// Note : p = plus / m = moins
 	for (int i = 0 ; i < nbIter ; ++i)
 	{
 		// Calcul des dérivées de LevelSet

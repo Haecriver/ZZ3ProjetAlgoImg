@@ -31,13 +31,11 @@
             Pr&eacute;sentation du sujet
         </h1>
         <p>
-            Le projet se base sur une publication du laboratoire de recherche <em>CEREMADE</em> de l'<em>Université de Paris 9</em>            effectuée le 18 Juin 2004.
+            Le projet se base sur une publication du laboratoire de recherche <em>CEREMADE</em> de l'<em>Université de Paris 9</em> effectu&eacute;e le 18 Juin 2004.
         </p>
 
         <p>
-            L'interêt du projet est de pouvoir détecter de manière fiable les objets en mouvements au sein d'une séquence vidéo. Pour
-            des raisons de simplifications, nous traiterons ici des lots de 2 images extraites d'une séquence vidéo où des
-            objets sont en mouvement.
+            L'interêt du projet est de pouvoir détecter de manière fiable les objets en mouvements au sein d'une séquence vidéo. Pour des raisons de simplifications, nous traiterons ici des lots de 2 images extraites d'une séquence vidéo où des objets sont en mouvement.
         </p>
 
         <h1 class="titrearticle">
@@ -47,8 +45,6 @@
             <h2 class="soustitrearticle">
                 Partie th&eacute;orique
             </h2>
-
-        Pr&eacute;sentation de la m&eacute;thode utilis&eacute;e et r&eacute;f&eacute;rence aux travaux connexes (cf. biblio article)<br>
 
             <p>
                 Dans ce projet, deux techniques vont se retrouver conjointement sur le traitement de nos images.
@@ -65,9 +61,11 @@
             <p>
 				Pour intégré le flot optique à notre algorithme, c'est à dire pour que cette détection de mouvement soit intégrée à notre contour actif, il faut transformer le résultat en une matrice représentant le mouvement. Nous normons donc la distribution en niveau de gris pour obtenir une image de vitesse.
 			</p>
-<pre class="brush: cpp">
-const CImg<> imgInVitesse = ((imgInHS.get_channel(0).get_sqr() + imgInHS.get_channel(1).get_sqr()).get_sqrt());
-</pre>            
+
+            <pre class="brush: cpp">
+                const CImg<> imgInVitesse = ((imgInHS.get_channel(0).get_sqr() + imgInHS.get_channel(1).get_sqr()).get_sqrt());
+            </pre>
+
             <p>
             	Il existe plusieurs algorithme pour réaliser ce filtre : l'algorithme de Lucas et Kanade, Horn et Schunck, Weickert et Schnörr. Ce dernier est celui proposé par le sujet du projet. Il ajoute une fonction de lissage au flot optique pour améliorer ses résultats. Cette méthode toutefois ne répère pas de maniere efficace les mouvements les plus petits mais permet une réduction du bruit, c'est pour cela qu'elle est mise en avant dans le document. La méthode de Horn et Schunck de son côté peut donner des résultats plus bruités mais l'ajustement de ses paramètres fournit des résultats acceptables.
 			</p>
@@ -106,14 +104,37 @@ const CImg<> imgInVitesse = ((imgInHS.get_channel(0).get_sqr() + imgInHS.get_cha
             <p>
                 Afin que la donnée de mouvement soit bien prise en compte dans le modèle géodésique, nous allons introduire cette composante dans la fonction de calcul de l'évolution du contour.
             </p>
+
+            <p>
+                La fonction d'évolution du contour est la suivante :
+                <ul>
+                    <li/> F = a*F_prop + b*F_curv + c*F_adv.
+                </ul>
+
+                Avec :
+                <ul>
+                    <li/>F_prop : force de propagation, définit la vitesse d'évolution du contour,
+                    <li/> F_curv : rayon de courbure, définit les contraintes d'évolution sur la forme du contour et dépend du rayon de courbure,
+                    <li/>F_adv : force d'advection,
+                    <li/> a, b et c des coefficients permettant de plus ou moins considérer un des termes dans la formule.
+                </ul>
+            </p>
+
+            <h3 class="soussoustitrearticle">
+                Combinaison des techniques
+            </h3>
             
+            <p>
+                Nous allons donc nous servir du flot optique afin de déterminer les mouvements dans l'image. Ces données de mouvement se retrouvent 
+            </p>
 <!-- TODO: Parler de la prise en compte du flot optique dans le modele geodisique du contour actif -->
 
 
         <h2 class="soustitrearticle">
             Impl&eacute;mentation
         </h2>
-        D&eacute;tails de l'impl&eacute;mentation (sous CImg)
+        
+            Les techniques abbordées précédemment ont été mise en place en C++ à l'aide de la bibliothèque CImg.
 
             <h3 class="soussoustitrearticle">
                 Flot optique
@@ -403,12 +424,103 @@ CImg<> HornSchunck(CImg<> seq, double lambda)
 </pre>
 
             <h3 class="soussoustitrearticle">
-                Contours actifs
+                Contours actifs couplée au flot optique
             </h3>
 
             <p>
-
+                Le code suivant permet d'effectuer une recherche de contour géodésique dans l'image en prennant en compte les mouvements décrits à l'aide du flot optique présenté dans la partie précédente.
             </p>
+
+<pre class="brush: cpp">
+void Propagate(
+	CImg<> imgIn,
+	CImg<>* LevelSet,
+	int nbIter,						// Nombre d'itération
+	float lambda,
+	float alpha, 					// Pondération du terme de propagation
+	float beta, 						// Pondération du terme d'advection
+	float gamma,
+	float delta_t,					// Pas temporel
+	float ballon,
+	float theta) 				// Force ballon
+{
+	// Calcul des gradients spaciaux régularisés de l'image
+	const CImgList<> gradImg = imgIn.get_channel(0).get_gradient("xy", 4 /* Filtre qui régularise */);
+	const CImg<> squareGradImgNorme = (gradImg[0].get_sqr() + gradImg[1].get_sqr());
+	
+	// Calculer le module de chaque vecteur
+	const CImg<> imgInHS = HornSchunck(imgIn,lambda);
+
+	// Calcul du module des vecteurs vitesse
+	const CImg<> imgInVitesse = ((imgInHS.get_channel(0).get_sqr() + imgInHS.get_channel(1).get_sqr()).get_sqrt());
+	
+	const CImgList<> gradimgInVitesse = imgInVitesse.get_gradient("xy",0);
+	const CImg<> squareGradImgVitess = (gradimgInVitesse[0].get_sqr() + gradimgInVitesse[1].get_sqr());
+	
+	// Calcul de la fonction d'arrêt g du modèle géodésique
+	CImg<> g(imgIn.width(), imgIn.height(), 1, 1);
+	cimg_forXY(g, x, y)
+	{
+		g(x, y) = ( 1.0 / double(1.0 + squareGradImgNorme(x, y)*(float)theta ) ) + ballon - (float)imgInVitesse(x,y)*(float)gamma;
+	}
+	
+	const CImgList<> gradG = g.get_gradient("xy");
+
+	for (int i = 0 ; i < nbIter ; ++i)
+	{
+		// Calcul des dérivées de LevelSet
+		const CImgList<> Dm = LevelSet->get_gradient("xy", -1);
+		//const CImgList<> Dc = LevelSet->get_gradient("xy", 0);
+		const CImgList<> Dp = LevelSet->get_gradient("xy", 1);
+				
+		cimg_forXY(*LevelSet, x, y)
+		{		
+			// Valeurs des dérivées de LevelSet
+			const float& Dxm = Dm[0](x, y);
+			const float& Dxp = Dp[0](x, y);
+			const float& Dym = Dm[1](x, y);
+			const float& Dyp = Dp[1](x, y);
+			
+			// Calcul des nablas
+			// Pour Dx
+			const float maxDxm0 = MAX(Dxm, 0);
+			const float minDxm0 = MIN(Dxm, 0);
+			const float maxDxp0 = MAX(Dxp, 0);
+			const float minDxp0 = MIN(Dxp, 0);
+			
+			// Pour Dy
+			const float maxDym0 = MAX(Dym, 0);
+			const float minDym0 = MIN(Dym, 0);
+			const float maxDyp0 = MAX(Dyp, 0);
+			const float minDyp0 = MIN(Dyp, 0);
+			
+			// Nablas
+			const float nablap = std::sqrt(	maxDxm0 * maxDxm0
+											+ minDxp0 * minDxp0
+											+ maxDym0 * maxDym0
+											+ minDyp0 * minDyp0);
+			const float nablam = std::sqrt(	maxDxp0 * maxDxp0
+											+ minDxm0 * minDxm0
+											+ maxDyp0 * maxDyp0
+											+ minDym0 * minDym0);
+		
+			// Calcul de la vitesse de propagation
+			const float Fprop = - (MAX(g(x, y), 0) * nablap + MIN(g(x, y), 0) * nablam);
+
+			// Calcul de la vitesse d'advection
+			const float& u = gradG[0](x, y);
+			const float& v = gradG[1](x, y);
+			const float Fadv = - (MAX(u, 0) * Dxm + MIN(u, 0) * Dxp + MAX(v, 0) * Dym + MIN(v, 0) * Dyp);
+			
+			(*LevelSet)(x, y) += delta_t * (alpha * Fprop + beta * Fadv );
+		}
+	}
+}
+</pre>
+
+    <p>
+        Le contour initial utilisé est un cercle centré dans l'image et dont le rayon est déterminé par le minimum entre la moitié de la hauteur de l'image et la moitié de la largeur de l'image.
+    </p>
 
         <h1 class="titrearticle">
             R&eacute;sultats
