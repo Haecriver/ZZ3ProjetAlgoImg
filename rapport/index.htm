@@ -71,14 +71,14 @@
 			</p>
 		<div class=image_group>	
 			<figure>
-                <img src="./rsc/small_lambda.png" alt="R&eacute;sultat Horn &amp;Schunck" height="128">
+                <img src="../rsc/small_lambda.png" alt="R&eacute;sultat Horn &amp;Schunck" height="128">
                 <figcaption>
                     R&eacute;sultat Horn &amp;Schunck avec un lambda peu &eacute;lev&eacute;
                 </figcaption>
             </figure>
 					
 			<figure>
-                <img src="./rsc/big_lambda.png" alt="R&eacute;sultat Horn &amp;Schunck" height="128">
+                <img src="../rsc/big_lambda.png" alt="R&eacute;sultat Horn &amp;Schunck" height="128">
                 <figcaption>
                     R&eacute;sultat Horn &amp;Schunck avec un lambda &eacute;lev&eacute;
                 </figcaption>
@@ -104,21 +104,23 @@
             <p>
                 Une fonction de courbe g&eacute;od&eacute;sique est calcul&eacute;e et va permettre de faire &eacute;voluer notre contour. Cette fonction est la suivante :
                 <ul>
-                    <li/> g(x) = 1 / (1 + |<mi mathvariant="normal">&#x2207;<!-- ∇ --></mi>Img|)
-                </ul>
-            </p>
+                    <li/>  <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>g</mi><mfenced><mi>x</mi></mfenced><mo>&#xA0;</mo><mo>=</mo><mfrac><mn>1</mn><mrow><mo>&#xA0;</mo><mo>(</mo><mn>1</mn><mo>&#xA0;</mo><mo>+</mo><mo>&#xA0;</mo><mo>|</mo><mo>&#x2207;</mo><mi>I</mi><mi>m</mi><mi>g</mi><mo>|</mo><mo>&#xA0;</mo><mo>)</mo></mrow></mfrac></math>
 
+                    
+                </ul>
+               
+            </p>
             <p>
                 La fonction d'&eacute;volution du contour est la suivante :
                 <ul>
-                    <li/> F = a*F_prop + b*F_curv + c*F_adv.
+                    <li/> <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>F</mi><mo>&#xA0;</mo><mo>=</mo><mo>&#xA0;</mo><mi>a</mi><mo>*</mo><msub><mi>F</mi><mrow><mi>p</mi><mi>r</mi><mi>o</mi><mi>p</mi></mrow></msub><mo>&#xA0;</mo><mo>+</mo><mo>&#xA0;</mo><mi>b</mi><mo>*</mo><msub><mi>F</mi><mrow><mi>c</mi><mi>u</mi><mi>r</mi><mi>v</mi></mrow></msub><mo>&#xA0;</mo><mo>+</mo><mo>&#xA0;</mo><mi>c</mi><mo>*</mo><msub><mi>F</mi><mrow><mi>a</mi><mi>d</mi><mi>v</mi></mrow></msub><mo>&#xA0;</mo></math>
                 </ul>
 
                 Avec :
                 <ul>
-                    <li/>F_prop : force de propagation, d&eacute;finit la vitesse d'&eacute;volution du contour,
-                    <li/> F_curv : rayon de courbure, d&eacute;finit les contraintes d'&eacute;volution sur la forme du contour et d&eacute;pend du rayon de courbure,
-                    <li/>F_adv : force d'advection,
+                    <li/><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>F</mi><mrow><mi>p</mi><mi>r</mi><mi>o</mi><mi>p</mi></mrow></msub></math>: force de propagation, d&eacute;finit la vitesse d'&eacute;volution du contour,
+                    <li/> <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>F</mi><mrow><mi>c</mi><mi>u</mi><mi>r</mi><mi>v</mi></mrow></msub></math>: rayon de courbure, d&eacute;finit les contraintes d'&eacute;volution sur la forme du contour et d&eacute;pend du rayon de courbure,
+                    <li/><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>F</mi><mrow><mi>a</mi><mi>d</mi><mi>v</mi></mrow></msub></math> : force d'advection,
                     <li/> a, b et c des coefficients permettant de plus ou moins consid&eacute;rer un des termes dans la formule.
                 </ul>
             </p>
@@ -131,7 +133,7 @@
                 Nous allons donc nous servir du flot optique afin de d&eacute;terminer les mouvements dans l'image. Ces donn&eacute;es de mouvement se retrouvent dans la fonction de courbe g&eacute;od&eacute;sique que notre contour devra suivre pour d&eacute;limiter au mieux les objets :
             </p>
             
-                <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>g</mi><mfenced><mi>x</mi></mfenced><mo>&#xA0;</mo><mo>=</mo><mfrac><mn>1</mn><mrow><mo>&#xA0;</mo><mo>(</mo><mn>1</mn><mo>&#xA0;</mo><mo>+</mo><mo>&#xA0;</mo><mo>|</mo><mo>&#x2207;</mo><mi>I</mi><mi>m</mi><mi>g</mi><mo>|</mo><mo>&#xA0;</mo><mo>-</mo><mo>&#xA0;</mo><mo>&#x2225;</mo><mo>&#xA0;</mo><mi>V</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>e</mi><mi>u</mi><mi>r</mi><mi>s</mi><mi>V</mi><mi>i</mi><mi>t</mi><mi>e</mi><mi>s</mi><mi>s</mi><mi>e</mi><mo>(</mo><mi>I</mi><mi>m</mi><mi>g</mi><mo>)</mo><mo>&#xA0;</mo><mo>&#x2225;</mo></mrow></mfrac></math>
+                <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>g</mi><mfenced><mi>x</mi></mfenced><mo>&#xA0;</mo><mo>=</mo><mfrac><mn>1</mn><mrow><mo>&#xA0;</mo><mo>(</mo><mn>1</mn><mo>&#xA0;</mo><mo>+</mo><mo>&#xA0;</mo><mo>|</mo><mo>&#x2207;</mo><mi>I</mi><mi>m</mi><mi>g</mi><mo>|</mo><mo>&#xA0;</mo><mo>)</mo></mfrac><mo>-</mo><mo>&#xA0;</mo><mo>&#x2225;</mo><mo>&#xA0;</mo><mi>V</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>e</mi><mi>u</mi><mi>r</mi><mi>s</mi><mi>V</mi><mi>i</mi><mi>t</mi><mi>e</mi><mi>s</mi><mi>s</mi><mi>e</mi><mo>(</mo><mi>I</mi><mi>m</mi><mi>g</mi><mo>)</mo><mo>&#xA0;</mo><mo>&#x2225;</mo></mrow></math>
             
         <h2 class="soustitrearticle">
             Impl&eacute;mentation
@@ -568,7 +570,7 @@ void Propagate(
         </p>
 
         <p>
-            Pour ex&eacute;cuter le traitement, on utilise la commande :    
+            Pour ex&eacute;cuter le traitement, on utilise la commande depuis le r&eacute;pertoire ./src/ :    
         </p>
             <code>
                 ./mosuofe -img1 ../rsc/carreBois1.bmp -img2 ../rsc/carreBois2.bmp -a 0.5 -t 0.05 -g 0.3 -b 0.3
@@ -580,6 +582,48 @@ void Propagate(
             <div>
                 <figure>
                     <img src="../rsc/resulatCarreBois.bmp" alt="R&eacute;sultat" height="128">
+                    <figcaption>
+                        R&eacute;sultat de l'ex&eacute;cution du programme
+                    </figcaption>
+                </figure>
+            </div>
+        </p>
+        
+        <p>
+            Un autre exemple avec ces deux images, dont le mouvements est pr&eacute;sent mais plus petit :
+
+            <div class=image_group>
+                <figure>
+                    <img src="../rsc/test_mouv_small1.png" alt="Image de synth&egrave;se 1" height="128">
+                    <figcaption>
+                        Image 1
+                    </figcaption>
+                </figure>
+
+                <figure>
+                    <img src="../rsc/test_mouv_small2.png" alt="Image de synth&egrave;se 2" height="128">
+                    <figcaption>
+                        Image 2
+                    </figcaption>
+                </figure>
+            </div>
+
+            Nous pouvous observer sur ces images un l&eacute;ger d&eacute;placement du carr&eacute;.
+        </p>
+
+        <p>
+            Pour ex&eacute;cuter le traitement, on utilise la commande depuis le r&eacute;pertoire ./src/ :    
+        </p>
+            <code>
+            ./mosuofe -img1 ../rsc/test_mouv_small1.png -img2 ../rsc/test_mouv_small2.png -a 0.5 -t 0.05 -g 0.3 -b 0.3
+            </code>
+
+			<p>
+            	Le r&eacute;sultat est le suivant :
+			</p>
+            <div>
+                <figure>
+                    <img src="../rsc/resultat_test_mouv_small.png" alt="R&eacute;sultat" height="128">
                     <figcaption>
                         R&eacute;sultat de l'ex&eacute;cution du programme
                     </figcaption>
@@ -620,7 +664,7 @@ void Propagate(
 
             <div>
                 <figure>
-                    <img src="./rsc/a0.3t0.2g2.0b0.4l100.0.png" alt="R&eacute;sultat" height="128">
+                    <img src="../rsc/a0.3t0.2g2.0b0.4l100.0.png" alt="R&eacute;sultat" height="128">
                     <figcaption>
                         R&eacute;sultat
                     </figcaption>
