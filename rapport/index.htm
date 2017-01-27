@@ -59,7 +59,7 @@
             </p>
             
             <p>
-				Pour int&eacute;grer le flot optique &agrave; notre algorithme, c'est &agrave; dire pour que cette d&eacute;tection de mouvement soit int&eacute;gr&eacute;e &agrave; notre contour actif, il faut transformer le r&eacute;sultat en une matrice repr&eacute;sentant le mouvement. Nous normons donc la distribution en niveau de gris pour obtenir une image de vitesse.
+				Pour int&eacute;grer le flot optique &agrave; notre algorithme, c'est &agrave; dire pour que cette d&eacute;tection de mouvement soit int&eacute;gr&eacute;e &agrave; notre contour actif, il faut transformer le r&eacute;sultat en une matrice repr&eacute;sentant le mouvement. Nous normons donc la distribution en niveau de gris pour obtenir une "image" mettant en valeur les mouvements.
 			</p>
 
             <pre class="brush: cpp">
@@ -67,7 +67,7 @@
             </pre>
 
             <p>
-            	Il existe plusieurs algorithme pour r&eacute;aliser ce filtre : l'algorithme de Lucas et Kanade, Horn et Schunck, Weickert et Schnörr. Ce dernier est celui propos&eacute; par le sujet du projet. Il ajoute une fonction de lissage au flot optique pour am&eacute;liorer ses r&eacute;sultats. Cette m&eacute;thode toutefois ne r&eacute;p&egrave;re pas de maniere efficace les mouvements les plus petits mais permet une r&eacute;duction du bruit, c'est pour cela qu'elle est mise en avant dans le document. La m&eacute;thode de Horn et Schunck de son côt&eacute; peut donner des r&eacute;sultats plus bruit&eacute;s mais l'ajustement de ses param&egrave;tres fournit des r&eacute;sultats acceptables.
+            	Il existe plusieurs algorithme pour r&eacute;aliser ce filtre : l'algorithme de Lucas et Kanade, Horn et Schunck, Weickert et Schnörr. Ce dernier est celui propos&eacute; par le sujet du projet. Il ajoute une fonction de lissage au flot optique pour am&eacute;liorer ses r&eacute;sultats. Cette m&eacute;thode toutefois ne r&eacute;p&egrave;re pas de maniere efficace les mouvements les plus petits mais permet une r&eacute;duction du bruit, c'est pour cela qu'elle est mise en avant dans le document. La m&eacute;thode de Horn et Schunck de son côt&eacute; peut donner des r&eacute;sultats plus bruit&eacute;s mais l'ajustement de ses param&egrave;tres (lambda) fournit des r&eacute;sultats acceptables.
 			</p>
 		<div class=image_group>	
 			<figure>
@@ -436,14 +436,14 @@ CImg<> HornSchunck(CImg<> seq, double lambda)
 void Propagate(
 	CImg<> imgIn,
 	CImg<>* LevelSet,
-	int nbIter,						// Nombre d'it&eacute;ration
-	float lambda,
-	float alpha, 					// Pond&eacute;ration du terme de propagation
-	float beta, 						// Pond&eacute;ration du terme d'advection
-	float gamma,
-	float delta_t,					// Pas temporel
-	float ballon,
-	float theta) 				// Force ballon
+	int nbIter,		// Nombre d'it&eacute;ration
+	float lambda,		// Parametre de Horn et Schunck
+	float alpha, 		// Pond&eacute;ration du terme de propagation
+	float beta, 		// Pond&eacute;ration du terme d'advection
+	float gamma,		// Ponderation du contour actif
+	float delta_t,		// Pas temporel
+	float ballon,		// Force ballon
+	float theta) 		// Ponderation modele geodesique classique
 {
 	// Calcul des gradients spaciaux r&eacute;gularis&eacute;s de l'image
 	const CImgList<> gradImg = imgIn.get_channel(0).get_gradient("xy", 4 /* Filtre qui r&eacute;gularise */);
@@ -530,8 +530,8 @@ void Propagate(
             <li/> -l : param&egrave;tre lamba permettant de r&eacute;duire le bruit sur la m&eacute;thode de Horn &amp;Schunck,
             <li/> -a : agit sur l'importance de la force de propagation,
             <li/> -b : agit sur l'importance de la force d'advection,
-            <li/> -g : agit sur l'importance de la vitesse de propagation,
-            <li/> -t : agit sur l'importance de la norme du gradient de l'image,
+            <li/> -g : agit sur l'importance du resultat du contour actif dans le mod&egrave;le g&eacute;od&eacute;sique
+            <li/> -t : agit sur l'importance de la norme du gradient de l'image dans le mod&egrave;le g&eacute;od&eacute;sique classique
             <li/> -dt : pas temporel,
             <li/> -ballon : force de ballon.
         </ul>
@@ -591,9 +591,6 @@ void Propagate(
             Comme on peut l'observer, le programme est tout &agrave; fait capable de d&eacute;tecter l'objet en mouvement. On distingue toutefois certains soucis de pr&eacute;cision sur le contour.
             Ceci peut s'expliquer par le fait que le contour actif utilise &eacute;galement le gradient de l'image pour d&eacute;terminer les contours. Il est donc possible que dans une zone trop sombre ou trop claire, le contour soit impr&eacute;cis.
         </p>
-
-
-        Vous devez cr&eacute;er des donn&eacute;es de synth&egrave;se pour &eacute;valuer votre m&eacute;thode<br>
 
         <h2 class="soustitrearticle">
             Donn&eacute;es r&eacute;elles
