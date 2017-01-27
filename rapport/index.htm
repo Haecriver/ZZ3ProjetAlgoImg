@@ -13,6 +13,16 @@
 
 		<script type="text/javascript" src="script/shCore.js"></script>
 		<script type="text/javascript" src="script/shBrushCpp.js"></script>
+		
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({
+		  config: ["MMLorHTML.js"],
+		  jax: ["input/TeX","input/MathML","output/HTML-CSS","output/NativeMML"],
+		  extensions: ["tex2jax.js","mml2jax.js","MathMenu.js","MathZoom.js"],
+		  TeX: {
+			extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"]
+		  }
+		});</script>
+		<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
         <meta name="KeyWords" content="ISIMA, TP, imagerie">
 
@@ -104,7 +114,7 @@
             <p>
                 Une fonction de courbe g&eacute;od&eacute;sique est calcul&eacute;e et va permettre de faire &eacute;voluer notre contour. Cette fonction est la suivante :
                 <ul>
-					<li/>  <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>g</mi><mfenced><mi>(x)</mi></mfenced><mo>&#xA0;</mo><mo>=</mo><mfrac><mn>1/</mn><mrow><mo>&#xA0;</mo><mo>(</mo><mn>1</mn><mo>&#xA0;</mo><mo>+</mo><mo>&#xA0;</mo><mo>|</mo><mo>&#x2207;</mo><mi>I</mi><mi>m</mi><mi>g</mi><mo>|</mo><mo>&#xA0;</mo><mo>)</mo></mrow></mfrac></math>
+					<li/>  <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>g</mi><mfenced><mi>x</mi></mfenced><mo>&#xA0;</mo><mo>=</mo><mfrac><mn>1</mn><mrow><mo>&#xA0;</mo><mo>(</mo><mn>1</mn><mo>&#xA0;</mo><mo>+</mo><mo>&#xA0;</mo><mo>|</mo><mo>&#x2207;</mo><mi>I</mi><mi>m</mi><mi>g</mi><mo>|</mo><mo>&#xA0;</mo><mo>)</mo></mrow></mfrac></math>
 
                     
                 </ul>
@@ -133,7 +143,7 @@
                 Nous allons donc nous servir du flot optique afin de d&eacute;terminer les mouvements dans l'image. Ces donn&eacute;es de mouvement se retrouvent dans la fonction de courbe g&eacute;od&eacute;sique que notre contour devra suivre pour d&eacute;limiter au mieux les objets :
             </p>
             
-				<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>g</mi><mfenced><mi>(x)</mi></mfenced><mo>&#xA0;</mo><mo>=</mo><mfrac><mn>1/</mn><mrow><mo>&#xA0;</mo><mo>(</mo><mn>1</mn><mo>&#xA0;</mo><mo>+</mo><mo>&#xA0;</mo><mo>|</mo><mo>&#x2207;</mo><mi>I</mi><mi>m</mi><mi>g</mi><mo>|</mo><mo>&#xA0;</mo><mo>)</mo></mfrac><mo>-</mo><mo>&#xA0;</mo><mo>&#x2225;</mo><mo>&#xA0;</mo><mi>V</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>e</mi><mi>u</mi><mi>r</mi><mi>s</mi><mi>V</mi><mi>i</mi><mi>t</mi><mi>e</mi><mi>s</mi><mi>s</mi><mi>e</mi><mo>(</mo><mi>I</mi><mi>m</mi><mi>g</mi><mo>)</mo><mo>&#xA0;</mo><mo>&#x2225;</mo></mrow></math>
+				<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>g</mi><mfenced><mi>x</mi></mfenced><mo>&#xA0;</mo><mo>=</mo><mfrac><mn>1</mn><mrow><mo>&#xA0;</mo><mo>(</mo><mn>1</mn><mo>&#xA0;</mo><mo>+</mo><mo>&#xA0;</mo><mo>|</mo><mo>&#x2207;</mo><mi>I</mi><mi>m</mi><mi>g</mi><mo>|</mo><mo>&#xA0;</mo><mo>)</mo></mfrac><mo>-</mo><mo>&#xA0;</mo><mo>&#x2225;</mo><mo>&#xA0;</mo><mi>V</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>e</mi><mi>u</mi><mi>r</mi><mi>s</mi><mi>V</mi><mi>i</mi><mi>t</mi><mi>e</mi><mi>s</mi><mi>s</mi><mi>e</mi><mo>(</mo><mi>I</mi><mi>m</mi><mi>g</mi><mo>)</mo><mo>&#xA0;</mo><mo>&#x2225;</mo></mrow></math>
             
         <h2 class="soustitrearticle">
             Impl&eacute;mentation
@@ -729,6 +739,7 @@ void Propagate(
         
     </body>
 <script type="text/javascript">
-     SyntaxHighlighter.all()
+     SyntaxHighlighter.all();
+     MathJax.Hub.Configured();
 </script>
 </html>
