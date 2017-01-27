@@ -67,7 +67,7 @@
             </pre>
 
             <p>
-            	Il existe plusieurs algorithme pour r&eacute;aliser ce filtre : l'algorithme de Lucas et Kanade, Horn et Schunck, Weickert et Schnörr. Ce dernier est celui propos&eacute; par le sujet du projet. Il ajoute une fonction de lissage au flot optique pour am&eacute;liorer ses r&eacute;sultats. Cette m&eacute;thode toutefois ne r&eacute;p&egrave;re pas de maniere efficace les mouvements les plus petits mais permet une r&eacute;duction du bruit, c'est pour cela qu'elle est mise en avant dans le document. La m&eacute;thode de Horn et Schunck de son côt&eacute; peut donner des r&eacute;sultats plus bruit&eacute;s mais l'ajustement de ses param&egrave;tres (lambda) fournit des r&eacute;sultats acceptables.
+            	Il existe plusieurs algorithme pour r&eacute;aliser ce filtre : l'algorithme de Lucas et Kanade, Horn et Schunck, Weickert et Schnörr. Ce dernier est celui propos&eacute; par le sujet du projet. Il ajoute une fonction de lissage au flot optique pour am&eacute;liorer ses r&eacute;sultats. Cette m&eacute;thode toutefois ne r&eacute;p&egrave;re pas de maniere efficace les mouvements les plus petits mais permet une r&eacute;duction du bruit, c'est pour cela qu'elle est mise en avant dans le document. La m&eacute;thode de Horn et Schunck de son c&ocirc;t&eacute; peut donner des r&eacute;sultats plus bruit&eacute;s mais l'ajustement de ses param&egrave;tres (lambda) fournit des r&eacute;sultats acceptables.
 			</p>
 		<div class=image_group>	
 			<figure>
@@ -104,7 +104,7 @@
             <p>
                 Une fonction de courbe g&eacute;od&eacute;sique est calcul&eacute;e et va permettre de faire &eacute;voluer notre contour. Cette fonction est la suivante :
                 <ul>
-                    <li/>  <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>g</mi><mfenced><mi>x</mi></mfenced><mo>&#xA0;</mo><mo>=</mo><mfrac><mn>1</mn><mrow><mo>&#xA0;</mo><mo>(</mo><mn>1</mn><mo>&#xA0;</mo><mo>+</mo><mo>&#xA0;</mo><mo>|</mo><mo>&#x2207;</mo><mi>I</mi><mi>m</mi><mi>g</mi><mo>|</mo><mo>&#xA0;</mo><mo>)</mo></mrow></mfrac></math>
+					<li/>  <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>g</mi><mfenced><mi>(x)</mi></mfenced><mo>&#xA0;</mo><mo>=</mo><mfrac><mn>1/</mn><mrow><mo>&#xA0;</mo><mo>(</mo><mn>1</mn><mo>&#xA0;</mo><mo>+</mo><mo>&#xA0;</mo><mo>|</mo><mo>&#x2207;</mo><mi>I</mi><mi>m</mi><mi>g</mi><mo>|</mo><mo>&#xA0;</mo><mo>)</mo></mrow></mfrac></math>
 
                     
                 </ul>
@@ -133,7 +133,7 @@
                 Nous allons donc nous servir du flot optique afin de d&eacute;terminer les mouvements dans l'image. Ces donn&eacute;es de mouvement se retrouvent dans la fonction de courbe g&eacute;od&eacute;sique que notre contour devra suivre pour d&eacute;limiter au mieux les objets :
             </p>
             
-                <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>g</mi><mfenced><mi>x</mi></mfenced><mo>&#xA0;</mo><mo>=</mo><mfrac><mn>1</mn><mrow><mo>&#xA0;</mo><mo>(</mo><mn>1</mn><mo>&#xA0;</mo><mo>+</mo><mo>&#xA0;</mo><mo>|</mo><mo>&#x2207;</mo><mi>I</mi><mi>m</mi><mi>g</mi><mo>|</mo><mo>&#xA0;</mo><mo>)</mo></mfrac><mo>-</mo><mo>&#xA0;</mo><mo>&#x2225;</mo><mo>&#xA0;</mo><mi>V</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>e</mi><mi>u</mi><mi>r</mi><mi>s</mi><mi>V</mi><mi>i</mi><mi>t</mi><mi>e</mi><mi>s</mi><mi>s</mi><mi>e</mi><mo>(</mo><mi>I</mi><mi>m</mi><mi>g</mi><mo>)</mo><mo>&#xA0;</mo><mo>&#x2225;</mo></mrow></math>
+				<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>g</mi><mfenced><mi>(x)</mi></mfenced><mo>&#xA0;</mo><mo>=</mo><mfrac><mn>1/</mn><mrow><mo>&#xA0;</mo><mo>(</mo><mn>1</mn><mo>&#xA0;</mo><mo>+</mo><mo>&#xA0;</mo><mo>|</mo><mo>&#x2207;</mo><mi>I</mi><mi>m</mi><mi>g</mi><mo>|</mo><mo>&#xA0;</mo><mo>)</mo></mfrac><mo>-</mo><mo>&#xA0;</mo><mo>&#x2225;</mo><mo>&#xA0;</mo><mi>V</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>e</mi><mi>u</mi><mi>r</mi><mi>s</mi><mi>V</mi><mi>i</mi><mi>t</mi><mi>e</mi><mi>s</mi><mi>s</mi><mi>e</mi><mo>(</mo><mi>I</mi><mi>m</mi><mi>g</mi><mo>)</mo><mo>&#xA0;</mo><mo>&#x2225;</mo></mrow></math>
             
         <h2 class="soustitrearticle">
             Impl&eacute;mentation
@@ -677,7 +677,7 @@ void Propagate(
         </h1>
 
         <p>
-            Nous pouvons remarquer que cette m&eacute;thode de d&eacute;tection des contours d'objets en mouvement est plutôt fiable comme nous avons pu le constater sur les r&eacute;sultats th&eacute;oriques.
+            Nous pouvons remarquer que cette m&eacute;thode de d&eacute;tection des contours d'objets en mouvement est plut&ocirc;t fiable comme nous avons pu le constater sur les r&eacute;sultats th&eacute;oriques.
             Cependant dans un contexte plus r&eacute;el, nous remarquons qu'il est plus diffile d'obtenir des contours pr&eacute;cis. Plusieurs facteurs en sont responsables :
             <ul>
                 <li/> Un mauvais contraste dans l'image,
